@@ -1,8 +1,8 @@
 package Controllers
 
 import (
+	"Golang/Managers"
 	"fmt"
-	"serverLocalGo/Managers"
 
 	"github.com/gin-gonic/gin"
 )

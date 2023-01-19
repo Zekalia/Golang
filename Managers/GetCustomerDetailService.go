@@ -1,8 +1,8 @@
 package Managers
 
 import (
+	"Golang/Connectors"
 	"fmt"
-	"serverLocalGo/Connectors"
 
 	"github.com/gin-gonic/gin"
 )

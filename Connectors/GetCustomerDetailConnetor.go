@@ -1,8 +1,9 @@
 package Connectors
 
 import (
+	"Golang/Models"
+
 	"github.com/gin-gonic/gin"
-	"serverLocalGo/Models"
 )
 
 func GetCustomerDetail(c *gin.Context) (err error) {

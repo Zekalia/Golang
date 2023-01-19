@@ -1,8 +1,8 @@
 package Routes
 
 import (
+	"Golang/Controllers"
 	"net/http"
-	"serverLocalGo/Controllers"
 
 	"github.com/gin-gonic/gin"
 )

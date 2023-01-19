@@ -1,6 +1,6 @@
 package main
 
-import "serverLocalGo/Routes"
+import "Golang/Routes"
 
 func main() {
 	r := Routes.SetupRouter()
