@@ -2,16 +2,36 @@ package Managers
 
 import (
 	"Golang/Connectors"
+	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-func CustomerDetail(c *gin.Context) (err error) {
+func ProductDetail(c *gin.Context) (err error) {
+	var dataMap map[string]any
 
-	mobileNumber := c.Params.ByName("mobileNumber")
-	fmt.Println("mobileNumber Service : ", mobileNumber)
-	err = Connectors.GetCustomerDetail(c)
+	reqBody, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		fmt.Println("Failed read request body")
+		fmt.Println(err)
+		return err
+	}
+	json.Unmarshal(reqBody, &dataMap)
+
+	id := dataMap["id"].(string)
+	if id == "" {
+		fmt.Println("Invalid body request")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid body request"})
+		return
+	}
+
+	fmt.Println("dataMap : ", dataMap)
+	fmt.Println("id : ", id)
+
+	err = Connectors.GetProductDetail(c, dataMap)
 	if err != nil {
 		fmt.Println("Faied get data")
 		fmt.Println(err)

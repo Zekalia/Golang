@@ -9,7 +9,7 @@ import (
 
 func GetDetail(c *gin.Context) {
 
-	err := Managers.CustomerDetail(c)
+	err := Managers.ProductDetail(c)
 	if err != nil {
 		fmt.Println("error controller")
 		fmt.Println(err)
