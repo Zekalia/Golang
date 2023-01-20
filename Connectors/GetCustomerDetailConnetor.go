@@ -13,15 +13,15 @@ import (
 )
 
 func GetProductDetail(c *gin.Context, dataMap map[string]any) (err error) {
-	var reqDetail Models.Product
+	//var reqDetail Models.Product
 	var resDetail Models.Product
 
-	reqDetail.Id = dataMap["id"].(string)
+	//reqDetail.Id = dataMap["id"].(string)
 
 	reqBody := new(bytes.Buffer)
-	json.NewEncoder(reqBody).Encode(reqDetail)
+	json.NewEncoder(reqBody).Encode(dataMap)
 
-	var apiUrl = ""
+	var apiUrl = "http://localhost:8080/api/product"
 	client := http.Client{}
 
 	req, err := http.NewRequest("POST", apiUrl, reqBody)
