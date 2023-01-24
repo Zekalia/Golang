@@ -11,77 +11,39 @@ import (
 
 func GetStokList(c *gin.Context) (err error) {
 
-	result := make([]Models.RequestGetDetails, 0)
-	products := getElektronik()
-	for _, product := range products {
-		result = append(result, product)
-	}
+	resultElektronik := make([]Models.RequestGetDetails, 0)
+	resultBuku := make([]Models.RequestGetDetails, 0)
+	resultMinuman := make([]Models.RequestGetDetails, 0)
 
-	products = getBuku()
-	for _, product := range products {
-		result = append(result, product)
-	}
-
-	products = getMinuman()
-	for _, product := range products {
-		result = append(result, product)
-	}
-
-	response, err := json.Marshal(result)
+	getElektronik, err := ioutil.ReadFile("daftarelektronik.json")
 	if err != nil {
 		panic(err)
 	}
+	json.Unmarshal(getElektronik, &resultElektronik)
 
-	c.String(http.StatusOK, string(response))
+	getBuku, err := ioutil.ReadFile("daftarbuku.json")
+	if err != nil {
+		panic(err)
+	}
+	json.Unmarshal(getBuku, &resultBuku)
+
+	getMinuman, err := ioutil.ReadFile("daftarminuman.json")
+	if err != nil {
+		panic(err)
+	}
+	json.Unmarshal(getMinuman, &resultMinuman)
+
+	output := map[string]interface{}{
+		"response_code":    "00",
+		"response_message": "Transaction Success",
+		"list_elektronik":  []interface{}{resultElektronik},
+		"list_buku":        []interface{}{resultBuku},
+		"list_minuman":     []interface{}{resultMinuman},
+	}
+
+	c.JSON(http.StatusOK, output)
 
 	return
-}
-
-func getElektronik() (products []Models.RequestGetDetails) {
-	response, err := ioutil.ReadFile("daftarelektronik.json")
-	if err != nil {
-		panic(err)
-	}
-
-	err = json.Unmarshal(response, &products)
-
-	if err != nil {
-		panic(err)
-	}
-
-	return products
-}
-
-func getBuku() (products []Models.RequestGetDetails) {
-	response, err := ioutil.ReadFile("daftarbuku.json")
-
-	if err != nil {
-		panic(err)
-	}
-
-	err = json.Unmarshal(response, &products)
-
-	if err != nil {
-		panic(err)
-	}
-
-	return products
-}
-
-func getMinuman() (products []Models.RequestGetDetails) {
-	response, err := ioutil.ReadFile("daftarminuman.json")
-
-	if err != nil {
-		panic(err)
-	}
-
-	err = json.Unmarshal(response, &products)
-
-	if err != nil {
-		panic(err)
-	}
-
-	return products
 }
 
 func GetCustomerDetail(c *gin.Context) (err error) {
