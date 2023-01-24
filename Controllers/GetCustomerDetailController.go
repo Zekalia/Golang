@@ -15,3 +15,12 @@ func GetDetail(c *gin.Context) {
 		fmt.Println(err)
 	}
 }
+
+func GetStok(c *gin.Context) {
+
+	err := Managers.StokList(c)
+	if err != nil {
+		fmt.Println("error controller")
+		fmt.Println(err)
+	}
+}

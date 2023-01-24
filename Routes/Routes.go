@@ -18,5 +18,10 @@ func SetupRouter() *gin.Engine {
 		grp1.POST("getdetail/:mobileNumber", Controllers.GetDetail)
 	}
 
+	grp2 := r.Group("api/")
+	{
+		grp2.POST("getstok/", Controllers.GetStok)
+	}
+
 	return r
 }

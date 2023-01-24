@@ -19,3 +19,15 @@ func CustomerDetail(c *gin.Context) (err error) {
 	}
 	return
 }
+
+func StokList(c *gin.Context) (err error) {
+
+	err = Connectors.GetStokList(c)
+	if err != nil {
+		fmt.Println("Faied get data")
+		fmt.Println(err)
+		return err
+	}
+
+	return
+}

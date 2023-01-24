@@ -1,0 +1,17 @@
+[
+	{
+		"id" : "1",
+		"produk" : "Kulkas",
+		"stok" : "3"
+	},
+	{
+		"id" : "2",
+		"produk" : "TV",
+		"stok" : "6"
+	},
+	{
+		"id" : "3",
+		"produk" : "AC",
+		"stok" : "1"
+	}
+]

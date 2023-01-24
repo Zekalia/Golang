@@ -1,0 +1,17 @@
+[
+  {
+		"id" : "7",
+		"produk" : "Pocari",
+		"stok" : "15"
+	},
+  {
+		"id" : "8",
+		"produk" : "Mizone",
+		"stok" : "16"
+	},
+  {
+		"id" : "9",
+		"produk" : "Kratindeng",
+		"stok" : "18"
+	}
+]

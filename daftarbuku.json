@@ -1,0 +1,17 @@
+[
+  {
+		"id" : "4",
+		"produk" : "Buku Tulis",
+		"stok" : "12"
+	},
+  {
+		"id" : "5",
+		"produk" : "Buku Gambar",
+		"stok" : "6"
+	},
+  {
+		"id" : "6",
+		"produk" : "Buku Cerita",
+		"stok" : "8"
+	}
+]
