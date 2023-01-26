@@ -23,5 +23,7 @@ func SetupRouter() *gin.Engine {
 		grp2.POST("getstok/", Controllers.GetStok)
 	}
 
+	r.Run(":8888")
+
 	return r
 }

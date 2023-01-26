@@ -33,13 +33,12 @@ func GetStokList(c *gin.Context) (err error) {
 	}
 	json.Unmarshal(getMinuman, &resultMinuman)
 
-	output := map[string]interface{}{
-		"response_code":    "00",
-		"response_message": "Transaction Success",
-		"list_elektronik":  []interface{}{resultElektronik},
-		"list_buku":        []interface{}{resultBuku},
-		"list_minuman":     []interface{}{resultMinuman},
-	}
+	var output Models.Output
+	output.ResponseCode = "00"
+	output.ResponseMessage = "Transaction Success"
+	output.ListElektronik = resultElektronik
+	output.ListBuku = resultBuku
+	output.ListMinuman = resultMinuman
 
 	c.JSON(http.StatusOK, output)
 
