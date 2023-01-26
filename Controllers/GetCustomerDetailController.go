@@ -17,6 +17,15 @@ func GetDetail(c *gin.Context) {
 	}
 }
 
+func GetBook(c *gin.Context) {
+
+	err := Managers.BookDetail(c)
+	if err != nil {
+		fmt.Println("error controller")
+		fmt.Println(err)
+	}
+}
+
 func GetProduct(c *gin.Context) {
 	type product struct {
 		Id string `json:"id"`
