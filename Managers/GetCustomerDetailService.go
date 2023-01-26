@@ -51,7 +51,7 @@ func BookDetail(c *gin.Context) (err error) {
 	}
 	json.Unmarshal(reqBody, &dataMap)
 
-	judul := dataMap["buku"].(string)
+	judul := dataMap["judul"].(string)
 	if judul == "" {
 		fmt.Println("Invalid body request")
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid body request"})

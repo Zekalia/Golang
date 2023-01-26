@@ -60,6 +60,7 @@ func GetBookDetail(c *gin.Context, dataMap map[string]any) (err error) {
 	var resDetail Models.Product
 
 	//reqDetail.Id = dataMap["id"].(string)
+	dataMap["buku"] = dataMap["judul"]
 
 	reqBody := new(bytes.Buffer)
 	json.NewEncoder(reqBody).Encode(dataMap)
