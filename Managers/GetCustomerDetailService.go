@@ -2,40 +2,31 @@ package Managers
 
 import (
 	"Golang/Connectors"
-	"encoding/json"
-	"fmt"
-	"io"
-	"net/http"
+	"Golang/Models"
 
 	"github.com/gin-gonic/gin"
 )
 
-func ProductDetail(c *gin.Context) (err error) {
-	var dataMap map[string]any
-
-	reqBody, err := io.ReadAll(c.Request.Body)
+func GetElektronikList(c *gin.Context) (Elektronik []Models.Product, err error) {
+	elektronik, err := Connectors.GetElektronikList(c)
 	if err != nil {
-		fmt.Println("Failed read request body")
-		fmt.Println(err)
-		return err
+		return nil, err
 	}
-	json.Unmarshal(reqBody, &dataMap)
+	return elektronik, nil
+}
 
-	id := dataMap["id"].(string)
-	if id == "" {
-		fmt.Println("Invalid body request")
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid body request"})
-		return
-	}
-
-	fmt.Println("dataMap : ", dataMap)
-	fmt.Println("id : ", id)
-
-	err = Connectors.GetProductDetail(c, dataMap)
+func GetBukuList(c *gin.Context) (Buku []Models.Product, err error) {
+	buku, err := Connectors.GetBukuList(c)
 	if err != nil {
-		fmt.Println("Faied get data")
-		fmt.Println(err)
-		return err
+		return nil, err
 	}
-	return
+	return buku, nil
+}
+
+func GetMainanList(c *gin.Context) (Mainan []Models.Product, err error) {
+	mainan, err := Connectors.GetMainanList(c)
+	if err != nil {
+		return nil, err
+	}
+	return mainan, nil
 }

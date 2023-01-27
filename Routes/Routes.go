@@ -15,9 +15,10 @@ func SetupRouter() *gin.Engine {
 		grp1.GET("welcome", func(c *gin.Context) {
 			c.JSON(http.StatusOK, "Hello localhost!")
 		})
-		grp1.POST("get-detail-product", Controllers.GetDetail)
-		grp1.POST("product", Controllers.GetProduct)
+		grp1.POST("getallproduct", Controllers.GetDetail)
 	}
+
+	r.Run(":8080")
 
 	return r
 }
