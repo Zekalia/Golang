@@ -228,6 +228,7 @@ func DeleteDataElectronic(c *gin.Context) (Elektronik Models.Product, err error)
 	client := http.Client{}
 
 	req, err := http.NewRequest("POST", apiUrl, reqBody)
+
 	fmt.Println(err)
 	fmt.Println(req)
 	if err != nil {
@@ -245,7 +246,41 @@ func DeleteDataElectronic(c *gin.Context) (Elektronik Models.Product, err error)
 		if err != nil {
 			log.Fatalf("failed to read body: %s", err)
 		}
+
 		json.Unmarshal([]byte(string(response)), &resultElektronik)
 	}
 	return resultElektronik, nil
+}
+
+func GetMainanById(c *gin.Context, dataMap map[string]interface{}) (Mainan Models.Product, err error) {
+	var resultMainan Models.Product
+
+	reqDetailsByte := new(bytes.Buffer)
+
+	var apiUrl = "http://localhost:8383/api/getmainanbyid/" + dataMap["id"].(string)
+	client := http.Client{}
+
+	req, err := http.NewRequest("GET", apiUrl, reqDetailsByte)
+
+	fmt.Println(err)
+	fmt.Println(req)
+	if err != nil {
+		return
+	}
+
+	req.Header = http.Header{"Content-Type": {"application/json"}}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, "Server Internal Error")
+		c.Abort()
+	} else {
+		response, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatalf("failed to read body: %s", err)
+		}
+		json.Unmarshal([]byte(string(response)), &resultMainan)
+	}
+	return resultMainan, nil
+
 }

@@ -3,6 +3,9 @@ package Managers
 import (
 	"Golang/Connectors"
 	"Golang/Models"
+	"encoding/json"
+	"fmt"
+	"io"
 
 	"github.com/gin-gonic/gin"
 )
@@ -65,4 +68,21 @@ func DeleteDataElectronic(c *gin.Context) (Elektronik Models.Product, err error)
 		return elektronik, err
 	}
 	return elektronik, nil
+}
+func GetMainanById(c *gin.Context) (Mainan Models.Product, err error) {
+	var dataMap map[string]interface{}
+
+	reqBody, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		fmt.Println("Failed read request body")
+		fmt.Println(err)
+		return
+	}
+	json.Unmarshal(reqBody, &dataMap)
+
+	mainan, err := Connectors.GetMainanById(c, dataMap)
+	if err != nil {
+		return mainan, err
+	}
+	return mainan, nil
 }

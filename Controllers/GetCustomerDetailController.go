@@ -142,3 +142,28 @@ func DeleteDataElectronic(c *gin.Context) {
 		c.JSON(http.StatusOK, outputElectronic)
 	}
 }
+
+func GetDetailToy(c *gin.Context) {
+	var output Models.OutputToy
+	mainan, err := Managers.GetMainanById(c)
+	if err != nil {
+		output.ResponseCode = "01"
+		output.ResponseMessage = "Mainan Not Found"
+		c.JSON(http.StatusInternalServerError, output)
+		c.Abort()
+	}
+
+	if err != nil {
+		output.ResponseCode = "99"
+		output.ResponseMessage = "General Error"
+		c.JSON(http.StatusInternalServerError, output)
+		c.Abort()
+	} else {
+
+		output.ResponseCode = "00"
+		output.ResponseMessage = "Transaction Success"
+		output.Mainan = mainan
+
+		c.JSON(http.StatusOK, output)
+	}
+}

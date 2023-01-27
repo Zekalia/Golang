@@ -20,6 +20,7 @@ func SetupRouter() *gin.Engine {
 		grp1.GET("getInsertDataElectronic", Controllers.GetInsertDataElektronic) //Call API Insert Data - Electronik
 		grp1.GET("getUpdateDataElectronic", Controllers.GetUpdateDataElectronic) //Call API Update Data - Electronik
 		grp1.GET("deleteDataElectronic", Controllers.DeleteDataElectronic)       //Call API Delete Data - Electronik
+		grp1.GET("getDetailToy", Controllers.GetDetailToy)
 	}
 
 	r.Run(":8080")
