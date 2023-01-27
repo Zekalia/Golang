@@ -30,3 +30,39 @@ func GetMainanList(c *gin.Context) (Mainan []Models.Product, err error) {
 	}
 	return mainan, nil
 }
+
+// Call API GetData - Electronik
+func GetDataElektronic(c *gin.Context) (Elektronik Models.Product, err error) {
+	elektronik, err := Connectors.GetDataElektronic(c)
+	if err != nil {
+		return elektronik, err
+	}
+	return elektronik, nil
+}
+
+// Call API Insert Data - Electronik
+func GetInsertDataElektronic(c *gin.Context) (Elektronik Models.Product, err error) {
+	elektronik, err := Connectors.GetInsertDataElektronic(c)
+	if err != nil {
+		return elektronik, err
+	}
+	return elektronik, nil
+}
+
+// Call API Update Data - Electronik
+func GetUpdateDataElectronic(c *gin.Context) (Elektronik Models.Product, err error) {
+	elektronik, err := Connectors.GetUpdateDataElectronic(c)
+	if err != nil {
+		return elektronik, err
+	}
+	return elektronik, nil
+}
+
+// Call API Delete Data - Electronik
+func DeleteDataElectronic(c *gin.Context) (Elektronik Models.Product, err error) {
+	elektronik, err := Connectors.DeleteDataElectronic(c)
+	if err != nil {
+		return elektronik, err
+	}
+	return elektronik, nil
+}

@@ -16,6 +16,10 @@ func SetupRouter() *gin.Engine {
 			c.JSON(http.StatusOK, "Hello localhost!")
 		})
 		grp1.GET("getallproduct", Controllers.GetDetail)
+		grp1.GET("getDataElectronic", Controllers.GetDataElektronic)             //Call API GetData - Electronik
+		grp1.GET("getInsertDataElectronic", Controllers.GetInsertDataElektronic) //Call API Insert Data - Electronik
+		grp1.GET("getUpdateDataElectronic", Controllers.GetUpdateDataElectronic) //Call API Update Data - Electronik
+		grp1.GET("deleteDataElectronic", Controllers.DeleteDataElectronic)       //Call API Delete Data - Electronik
 	}
 
 	r.Run(":8080")

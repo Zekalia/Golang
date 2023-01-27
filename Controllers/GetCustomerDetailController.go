@@ -48,3 +48,97 @@ func GetDetail(c *gin.Context) {
 		c.JSON(http.StatusOK, output)
 	}
 }
+
+// Call API GetData - Electronik
+func GetDataElektronic(c *gin.Context) {
+	var outputElectronic Models.OutputElectronic
+	elektronik, err := Managers.GetDataElektronic(c)
+	if err != nil {
+		outputElectronic.ResponseCode = "01"
+		outputElectronic.ResponseMessage = "Elektronik Not Found"
+		c.JSON(http.StatusInternalServerError, outputElectronic)
+		c.Abort()
+	}
+
+	if err != nil {
+		outputElectronic.ResponseCode = "99"
+		outputElectronic.ResponseMessage = "General Error"
+		c.JSON(http.StatusInternalServerError, outputElectronic)
+		c.Abort()
+	} else {
+		outputElectronic.ResponseCode = "00"
+		outputElectronic.ResponseMessage = "Transaction Success"
+		outputElectronic.Elektronik = elektronik
+		c.JSON(http.StatusOK, outputElectronic)
+	}
+}
+
+// Call API Insert Data - Electronik
+func GetInsertDataElektronic(c *gin.Context) {
+	var outputElectronic Models.OutputElectronic
+	_, err := Managers.GetInsertDataElektronic(c)
+	if err != nil {
+		outputElectronic.ResponseCode = "01"
+		outputElectronic.ResponseMessage = "Elektronik Not Found"
+		c.JSON(http.StatusInternalServerError, outputElectronic)
+		c.Abort()
+	}
+
+	if err != nil {
+		outputElectronic.ResponseCode = "99"
+		outputElectronic.ResponseMessage = "General Error"
+		c.JSON(http.StatusInternalServerError, outputElectronic)
+		c.Abort()
+	} else {
+		outputElectronic.ResponseCode = "00"
+		outputElectronic.ResponseMessage = "Transaction Success"
+		c.JSON(http.StatusOK, outputElectronic)
+	}
+}
+
+// Call API Update Data - Electronik
+func GetUpdateDataElectronic(c *gin.Context) {
+	var outputElectronic Models.OutputElectronic
+	elektronik, err := Managers.GetUpdateDataElectronic(c)
+	if err != nil {
+		outputElectronic.ResponseCode = "01"
+		outputElectronic.ResponseMessage = "Elektronik Not Found"
+		c.JSON(http.StatusInternalServerError, outputElectronic)
+		c.Abort()
+	}
+
+	if err != nil {
+		outputElectronic.ResponseCode = "99"
+		outputElectronic.ResponseMessage = "General Error"
+		c.JSON(http.StatusInternalServerError, outputElectronic)
+		c.Abort()
+	} else {
+		outputElectronic.ResponseCode = "00"
+		outputElectronic.ResponseMessage = "Transaction Success"
+		outputElectronic.Elektronik = elektronik
+		c.JSON(http.StatusOK, outputElectronic)
+	}
+}
+
+// Call API Delete Data - Electronik
+func DeleteDataElectronic(c *gin.Context) {
+	var outputElectronic Models.OutputElectronic
+	_, err := Managers.DeleteDataElectronic(c)
+	if err != nil {
+		outputElectronic.ResponseCode = "01"
+		outputElectronic.ResponseMessage = "Elektronik Not Found"
+		c.JSON(http.StatusInternalServerError, outputElectronic)
+		c.Abort()
+	}
+
+	if err != nil {
+		outputElectronic.ResponseCode = "99"
+		outputElectronic.ResponseMessage = "General Error"
+		c.JSON(http.StatusInternalServerError, outputElectronic)
+		c.Abort()
+	} else {
+		outputElectronic.ResponseCode = "00"
+		outputElectronic.ResponseMessage = "Transaction Success"
+		c.JSON(http.StatusOK, outputElectronic)
+	}
+}
