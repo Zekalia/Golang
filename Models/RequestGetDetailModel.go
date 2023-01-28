@@ -44,7 +44,7 @@ type OutputElectronic struct {
 	Elektronik      Product `json:"elektronik"`
 }
 type OutputToy struct {
-	ResponseCode    string  `json:"response_code"`
-	ResponseMessage string  `json:"response_message"`
-	Mainan          Product `json:"mainan"`
+	ResponseCode    string                 `json:"response_code"`
+	ResponseMessage string                 `json:"response_message"`
+	Data            map[string]interface{} `json:"data"`
 }

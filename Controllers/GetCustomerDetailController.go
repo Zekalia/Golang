@@ -159,10 +159,12 @@ func GetDetailToy(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, output)
 		c.Abort()
 	} else {
-
+		resultMap := map[string]interface{}{
+			"mainan": mainan,
+		}
 		output.ResponseCode = "00"
 		output.ResponseMessage = "Transaction Success"
-		output.Mainan = mainan
+		output.Data = resultMap
 
 		c.JSON(http.StatusOK, output)
 	}

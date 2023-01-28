@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -109,13 +110,14 @@ func GetMainanList(c *gin.Context) (Mainan []Models.Product, err error) {
 func GetDataElektronic(c *gin.Context) (Elektronik Models.Product, err error) {
 	var resultElektronik Models.Product
 	var reqBodyGetDataElec Models.ReqGetElectronicById
+	var resultMap map[string]interface{}
 
 	reqBody := new(bytes.Buffer)
 	c.BindJSON(&reqBodyGetDataElec)
 
 	json.NewEncoder(reqBody).Encode(&reqBodyGetDataElec)
 
-	var apiUrl = "http://localhost:8484/GetData"
+	var apiUrl = "http://localhost:8181/GetData"
 	client := http.Client{}
 
 	req, err := http.NewRequest("POST", apiUrl, reqBody)
@@ -136,8 +138,16 @@ func GetDataElektronic(c *gin.Context) (Elektronik Models.Product, err error) {
 		if err != nil {
 			log.Fatalf("failed to read body: %s", err)
 		}
-		json.Unmarshal([]byte(string(response)), &resultElektronik)
-		fmt.Println(resultElektronik)
+		json.Unmarshal([]byte(string(response)), &resultMap)
+		//fmt.Println(resultMap["data"])
+		sliceMap := resultMap["data"].([]interface{})
+		//fmt.Println(sliceMap[0])
+		resultMap = sliceMap[0].(map[string]interface{})
+		fmt.Println(resultMap["ID"])
+		resultElektronik.Id = fmt.Sprintf("%v", resultMap["ID"])
+		resultElektronik.Produk = fmt.Sprintf("%v", resultMap["ELEKTRONIK"])
+		resultElektronik.Stock = fmt.Sprintf("%v", resultMap["STOK"])
+
 	}
 	return resultElektronik, nil
 }
@@ -254,6 +264,7 @@ func DeleteDataElectronic(c *gin.Context) (Elektronik Models.Product, err error)
 
 func GetMainanById(c *gin.Context, dataMap map[string]interface{}) (Mainan Models.Product, err error) {
 	var resultMainan Models.Product
+	var responseMap map[string]interface{}
 
 	reqDetailsByte := new(bytes.Buffer)
 
@@ -275,11 +286,16 @@ func GetMainanById(c *gin.Context, dataMap map[string]interface{}) (Mainan Model
 		c.JSON(http.StatusInternalServerError, "Server Internal Error")
 		c.Abort()
 	} else {
-		response, err := ioutil.ReadAll(resp.Body)
+		respBody, err := io.ReadAll(resp.Body)
 		if err != nil {
 			log.Fatalf("failed to read body: %s", err)
 		}
-		json.Unmarshal([]byte(string(response)), &resultMainan)
+		json.Unmarshal([]byte(string(respBody)), &responseMap)
+		fmt.Println(responseMap)
+		resultMainan.Id = fmt.Sprintf("%v", responseMap["id"])
+		resultMainan.Produk = fmt.Sprintf("%v", responseMap["produk"])
+		resultMainan.Stock = fmt.Sprintf("%v", responseMap["stok"])
+
 	}
 	return resultMainan, nil
 
