@@ -268,7 +268,7 @@ func GetMainanById(c *gin.Context, dataMap map[string]interface{}) (Mainan Model
 
 	reqDetailsByte := new(bytes.Buffer)
 
-	var apiUrl = "http://localhost:8383/api/getmainanbyid/" + dataMap["id"].(string)
+	var apiUrl = "http://172.30.0.2:8383/api/getmainanbyid/" + dataMap["id"].(string)
 	client := http.Client{}
 
 	req, err := http.NewRequest("GET", apiUrl, reqDetailsByte)
@@ -284,6 +284,7 @@ func GetMainanById(c *gin.Context, dataMap map[string]interface{}) (Mainan Model
 	resp, err := client.Do(req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, "Server Internal Error")
+		fmt.Println(err)
 		c.Abort()
 	} else {
 		respBody, err := io.ReadAll(resp.Body)
@@ -296,6 +297,88 @@ func GetMainanById(c *gin.Context, dataMap map[string]interface{}) (Mainan Model
 		resultMainan.Produk = fmt.Sprintf("%v", responseMap["produk"])
 		resultMainan.Stock = fmt.Sprintf("%v", responseMap["stok"])
 
+	}
+	return resultMainan, nil
+
+}
+
+func UpdateMainanById(c *gin.Context, dataMap map[string]interface{}, output *Models.OutputToy) (Mainan Models.Product, err error) {
+	var resultMainan Models.Product
+	var responseMap map[string]interface{}
+
+	reqBodyByte := new(bytes.Buffer)
+	json.NewEncoder(reqBodyByte).Encode(dataMap)
+
+	var apiUrl = "http://172.30.0.2:8383/api/updateMainan/" + dataMap["id"].(string)
+	client := http.Client{}
+
+	req, err := http.NewRequest("POST", apiUrl, reqBodyByte)
+
+	fmt.Println(err)
+	fmt.Println(req)
+	if err != nil {
+		return
+	}
+
+	req.Header = http.Header{"Content-Type": {"application/json"}}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, "Server Internal Error")
+		fmt.Println(err)
+		c.Abort()
+	} else {
+		respBody, err := io.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatalf("failed to read body: %s", err)
+		}
+		json.Unmarshal([]byte(string(respBody)), &responseMap)
+		fmt.Println(responseMap)
+		// resultMainan.Id = fmt.Sprintf("%v", responseMap["id"])
+		// resultMainan.Produk = fmt.Sprintf("%v", responseMap["produk"])
+		// resultMainan.Stock = fmt.Sprintf("%v", responseMap["stok"])
+		output.Data = responseMap
+	}
+	return resultMainan, nil
+
+}
+
+func DeleteMainanById(c *gin.Context, dataMap map[string]interface{}, output *Models.OutputToy) (Mainan Models.Product, err error) {
+	var resultMainan Models.Product
+	var responseMap map[string]interface{}
+
+	reqBodyByte := new(bytes.Buffer)
+	json.NewEncoder(reqBodyByte).Encode(dataMap)
+
+	var apiUrl = "http://172.30.0.2:8383/api/delbyid/" + dataMap["id"].(string)
+	client := http.Client{}
+
+	req, err := http.NewRequest("DELETE", apiUrl, reqBodyByte)
+
+	fmt.Println(err)
+	fmt.Println(req)
+	if err != nil {
+		return
+	}
+
+	req.Header = http.Header{"Content-Type": {"application/json"}}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, "Server Internal Error")
+		fmt.Println(err)
+		c.Abort()
+	} else {
+		respBody, err := io.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatalf("failed to read body: %s", err)
+		}
+		json.Unmarshal([]byte(string(respBody)), &responseMap)
+		fmt.Println(responseMap)
+		// resultMainan.Id = fmt.Sprintf("%v", responseMap["id"])
+		// resultMainan.Produk = fmt.Sprintf("%v", responseMap["produk"])
+		// resultMainan.Stock = fmt.Sprintf("%v", responseMap["stok"])
+		output.Data = responseMap
 	}
 	return resultMainan, nil
 

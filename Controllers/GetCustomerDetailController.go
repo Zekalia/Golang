@@ -169,3 +169,49 @@ func GetDetailToy(c *gin.Context) {
 		c.JSON(http.StatusOK, output)
 	}
 }
+
+func UpdateDetailToy(c *gin.Context) {
+	var output Models.OutputToy
+	_, err := Managers.UpdateMainanById(c, &output)
+	if err != nil {
+		output.ResponseCode = "01"
+		output.ResponseMessage = "Mainan Not Found"
+		c.JSON(http.StatusInternalServerError, output)
+		c.Abort()
+	}
+
+	if err != nil {
+		output.ResponseCode = "99"
+		output.ResponseMessage = "General Error"
+		c.JSON(http.StatusInternalServerError, output)
+		c.Abort()
+	} else {
+		output.ResponseCode = "00"
+		output.ResponseMessage = "Transaction Success"
+
+		c.JSON(http.StatusOK, output)
+	}
+}
+
+func DeleteDetailToy(c *gin.Context) {
+	var output Models.OutputToy
+	_, err := Managers.DeleteMainanById(c, &output)
+	if err != nil {
+		output.ResponseCode = "01"
+		output.ResponseMessage = "Mainan Not Found"
+		c.JSON(http.StatusInternalServerError, output)
+		c.Abort()
+	}
+
+	if err != nil {
+		output.ResponseCode = "99"
+		output.ResponseMessage = "General Error"
+		c.JSON(http.StatusInternalServerError, output)
+		c.Abort()
+	} else {
+		output.ResponseCode = "00"
+		output.ResponseMessage = "Transaction Success"
+
+		c.JSON(http.StatusOK, output)
+	}
+}

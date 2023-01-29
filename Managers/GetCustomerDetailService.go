@@ -69,6 +69,7 @@ func DeleteDataElectronic(c *gin.Context) (Elektronik Models.Product, err error)
 	}
 	return elektronik, nil
 }
+
 func GetMainanById(c *gin.Context) (Mainan Models.Product, err error) {
 	var dataMap map[string]interface{}
 
@@ -81,6 +82,42 @@ func GetMainanById(c *gin.Context) (Mainan Models.Product, err error) {
 	json.Unmarshal(reqBody, &dataMap)
 
 	mainan, err := Connectors.GetMainanById(c, dataMap)
+	if err != nil {
+		return mainan, err
+	}
+	return mainan, nil
+}
+
+func UpdateMainanById(c *gin.Context, output *Models.OutputToy) (Mainan Models.Product, err error) {
+	var dataMap map[string]interface{}
+
+	reqBody, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		fmt.Println("Failed read request body")
+		fmt.Println(err)
+		return
+	}
+	json.Unmarshal(reqBody, &dataMap)
+
+	mainan, err := Connectors.UpdateMainanById(c, dataMap, output)
+	if err != nil {
+		return mainan, err
+	}
+	return mainan, nil
+}
+
+func DeleteMainanById(c *gin.Context, output *Models.OutputToy) (Mainan Models.Product, err error) {
+	var dataMap map[string]interface{}
+
+	reqBody, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		fmt.Println("Failed read request body")
+		fmt.Println(err)
+		return
+	}
+	json.Unmarshal(reqBody, &dataMap)
+
+	mainan, err := Connectors.DeleteMainanById(c, dataMap, output)
 	if err != nil {
 		return mainan, err
 	}
