@@ -268,13 +268,13 @@ func GetMainanById(c *gin.Context, dataMap map[string]interface{}) (Mainan Model
 
 	reqDetailsByte := new(bytes.Buffer)
 
-	var apiUrl = "http://172.30.0.2:8383/api/getmainanbyid/" + dataMap["id"].(string)
+	var apiUrl = "http://github-api-toy-1:8080/api/getmainanbyid/" + dataMap["id"].(string)
 	client := http.Client{}
 
 	req, err := http.NewRequest("GET", apiUrl, reqDetailsByte)
 
 	fmt.Println(err)
-	fmt.Println(req)
+	//fmt.Println(req)
 	if err != nil {
 		return
 	}
@@ -294,7 +294,7 @@ func GetMainanById(c *gin.Context, dataMap map[string]interface{}) (Mainan Model
 		json.Unmarshal([]byte(string(respBody)), &responseMap)
 		fmt.Println(responseMap)
 		resultMainan.Id = fmt.Sprintf("%v", responseMap["id"])
-		resultMainan.Produk = fmt.Sprintf("%v", responseMap["produk"])
+		resultMainan.Produk = fmt.Sprintf("%v", responseMap["mainan"])
 		resultMainan.Stock = fmt.Sprintf("%v", responseMap["stok"])
 
 	}
@@ -309,7 +309,7 @@ func UpdateMainanById(c *gin.Context, dataMap map[string]interface{}, output *Mo
 	reqBodyByte := new(bytes.Buffer)
 	json.NewEncoder(reqBodyByte).Encode(dataMap)
 
-	var apiUrl = "http://172.30.0.2:8383/api/updateMainan/" + dataMap["id"].(string)
+	var apiUrl = "http://github-api-toy-1:8080/api/updateMainan/" + dataMap["id"].(string)
 	client := http.Client{}
 
 	req, err := http.NewRequest("POST", apiUrl, reqBodyByte)
@@ -350,7 +350,7 @@ func DeleteMainanById(c *gin.Context, dataMap map[string]interface{}, output *Mo
 	reqBodyByte := new(bytes.Buffer)
 	json.NewEncoder(reqBodyByte).Encode(dataMap)
 
-	var apiUrl = "http://172.30.0.2:8383/api/delbyid/" + dataMap["id"].(string)
+	var apiUrl = "http://github-api-toy-1:8080/api/delbyid/" + dataMap["id"].(string)
 	client := http.Client{}
 
 	req, err := http.NewRequest("DELETE", apiUrl, reqBodyByte)
